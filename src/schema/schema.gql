@@ -15,5 +15,5 @@ type Query {
 }
 
 type Mutation {
-  addPhoto(data: PhotoUpload): Photo!
+  addPhoto(data: PhotoUpload!): Photo!
 }
