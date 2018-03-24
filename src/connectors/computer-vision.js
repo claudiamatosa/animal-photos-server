@@ -2,8 +2,8 @@ import fetch from "isomorphic-fetch";
 
 const config = {
   url: "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0",
-  apiKey1: proccess.env.AF_MICROSOFT_COMPUTER_VISION_API_KEY_1,
-  apiKey2: proccess.env.AF_MICROSOFT_COMPUTER_VISION_API_KEY_2
+  apiKey1: process.env.AF_MICROSOFT_COMPUTER_VISION_API_KEY_1,
+  apiKey2: process.env.AF_MICROSOFT_COMPUTER_VISION_API_KEY_2
 };
 
 const ComputerVision = () => {

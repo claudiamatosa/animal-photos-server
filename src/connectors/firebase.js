@@ -1,4 +1,6 @@
+import path from "path";
 import firebase from "firebase";
+import storage from "@google-cloud/storage";
 
 const config = {
   apiKey: process.env.AF_FIREBASE_API_KEY,
@@ -16,12 +18,16 @@ const endpoints = {
 const Firebase = () => {
   firebase.initializeApp(config);
   const database = firebase.database();
-  const storage = firebase.storage();
+
+  const storage = new Storage({
+    projectId: config.projectId,
+    keyFile: path.join(__dirname, "storage-keys.json")
+  });
 
   return {
     photo: id => database.ref(endpoints.photo(id)),
     photos: () => database.ref(endpoints.photos()),
-    file: id => storage.ref(endpoints.photos(id))
+    storage: () => storage.bucket(config.storageBucket)
   };
 };
 

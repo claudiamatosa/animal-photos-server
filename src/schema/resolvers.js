@@ -1,9 +1,10 @@
-import uuid from "uuid/v1";
 import { GraphQLUpload } from "apollo-upload-server";
 import Firebase from "../connectors/firebase";
 import ComputerVision from "../connectors/computer-vision";
+import { ImageUploader } from "../utils/images";
 
 const firebase = Firebase();
+const imageUploader = ImageUploader(firebase);
 const computerVision = ComputerVision();
 
 export default {
@@ -11,20 +12,14 @@ export default {
 
   Mutation: {
     addPhoto: async (_, { file }) => {
-      const { categories, metadata: { format } } = await computerVision.analyze(
-        file
-      );
+      const { categories } = await computerVision.analyze(file);
 
       if (!hasCategory("animals")(categories)) throw new Error("nope");
 
-      const id = uuid();
-      const contentType = `image/${format.toLowerCase()}`;
-      const storageRef = await firebase.file(id);
-      await storageRef.put(file, { contentType });
-
+      const { url } = await imageUploader(file);
       const { key } = await firebase.photo().push(fullPath);
 
-      return { id: key, src: storageRef.fullPath };
+      return { id: key, src: url };
     }
   },
 
