@@ -1,19 +1,24 @@
 import uuid from "uuid/v1";
 import { GraphQLUpload } from "apollo-upload-server";
-import Firebase from "../connectors";
+import Firebase from "../connectors/firebase";
+import ComputerVision from "../connectors/computer-vision";
 
 const firebase = Firebase();
+const computerVision = ComputerVision();
 
 export default {
   Upload: GraphQLUpload,
 
   Mutation: {
     addPhoto: async (_, { file }) => {
-      // TODO: get file type
-      // TODO: hit the microsoft computer vision api to check if the photo contains an animal
-      // https://docs.microsoft.com/en-gb/azure/cognitive-services/computer-vision/home#a-namecategorizingcategorizing-imagesa
+      const { categories, metadata: { format } } = await computerVision.analyze(
+        file
+      );
+
+      if (!hasCategory("animals")(categories)) throw new Error("nope");
+
       const id = uuid();
-      const contentType = "image/jpeg";
+      const contentType = `image/${format.toLowerCase()}`;
       const storageRef = await firebase.file(id);
       await storageRef.put(file, { contentType });
 
