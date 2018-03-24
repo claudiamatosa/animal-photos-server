@@ -1,0 +1,17 @@
+input PhotoUpload {
+  photo: Upload!
+}
+
+type Photo {
+  id: String!
+  src: String!
+}
+
+type Query {
+  photo(id: String!): Photo!
+  photos: [Photo!]!
+}
+
+type Mutation {
+  addPhoto(data: PhotoUpload): Photo!
+}
