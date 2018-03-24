@@ -1,5 +1,4 @@
 import uuid from "uuid/v1";
-import convertStream from "convert-stream";
 
 // Taken from https://medium.com/@stardusteric/nodejs-with-firebase-storage-c6ddcf131ceb
 export const ImageUploader = firebase => file => {
@@ -31,7 +30,6 @@ export const ImageUploader = firebase => file => {
       resolve({ url });
     });
 
-    const buffer = await convertStream.toBuffer(file.stream);
-    blobStream.end(buffer);
+    blobStream.end(file.buffer);
   });
 };

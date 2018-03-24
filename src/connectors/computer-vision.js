@@ -1,4 +1,5 @@
 import fetch from "isomorphic-fetch";
+import toStream from "buffer-to-stream";
 
 const config = {
   url: "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0",
@@ -13,15 +14,18 @@ const ComputerVision = () => {
     }&language=en&detectOrientation=true&${params}`;
 
   return {
-    analyze: file =>
-      fetch(analyze("visualFeatures=Categories"), {
+    analyze: async file => {
+      const response = await fetch(analyze("visualFeatures=Categories"), {
         method: "POST",
-        body: file.stream,
+        body: toStream(file.buffer),
         headers: new Headers({
           "Content-Type": "application/octet-stream",
           "Ocp-Apim-Subscription-Key": config.apiKey1
         })
-      }).then(response => response.json())
+      });
+
+      return response.json();
+    }
   };
 };
 

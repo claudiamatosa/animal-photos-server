@@ -3,6 +3,7 @@ import Firebase from "../connectors/firebase";
 import ComputerVision from "../connectors/computer-vision";
 import { hasCategory } from "../utils/categories";
 import { ImageUploader } from "../utils/images";
+import { addBufferToFile } from "../utils/file";
 
 const firebase = Firebase();
 const imageUploader = ImageUploader(firebase);
@@ -13,10 +14,10 @@ export default {
 
   Mutation: {
     addPhoto: async (_, { data: { photo } }) => {
-      const file = await photo;
-      // const { categories } = await computerVision.analyze(file);
+      let file = await addBufferToFile(photo);
+      const { categories } = await computerVision.analyze(file);
 
-      // if (!hasCategory("animals")(categories)) throw new Error("nope");
+      if (!hasCategory("animals")(categories)) throw new Error("nope");
 
       const { url } = await imageUploader(file);
       const { key } = await firebase.photo().push(url);
