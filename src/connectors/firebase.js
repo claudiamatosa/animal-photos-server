@@ -21,7 +21,7 @@ const Firebase = () => {
 
   const storage = new Storage({
     projectId: config.projectId,
-    keyFile: path.join(__dirname, "storage-keys.json")
+    keyFilename: path.join(__dirname, "storage-keys.json")
   });
 
   return {

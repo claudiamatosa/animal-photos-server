@@ -1171,6 +1171,10 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
+bluebird@^3.4.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
+
 body-parser@1.18.2, body-parser@^1.18.2:
   version "1.18.2"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.18.2.tgz#87678a19d84b47d859b83199bd59bce222b10454"
@@ -1529,6 +1533,12 @@ content-type@~1.0.4:
 convert-source-map@^1.1.0, convert-source-map@^1.4.0, convert-source-map@^1.5.0:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-1.5.1.tgz#b8278097b9bc229365de5c62cf5fcaed8b5599e5"
+
+convert-stream@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/convert-stream/-/convert-stream-1.0.2.tgz#152a7f10f4635e2bd000425b1fd025d1f114ff4d"
+  dependencies:
+    bluebird "^3.4.1"
 
 cookie-signature@1.0.6:
   version "1.0.6"

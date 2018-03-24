@@ -14,9 +14,9 @@ export default {
   Mutation: {
     addPhoto: async (_, { data: { photo } }) => {
       const file = await photo;
-      const { categories } = await computerVision.analyze(file);
+      // const { categories } = await computerVision.analyze(file);
 
-      if (!hasCategory("animals")(categories)) throw new Error("nope");
+      // if (!hasCategory("animals")(categories)) throw new Error("nope");
 
       const { url } = await imageUploader(file);
       const { key } = await firebase.photo().push(url);
