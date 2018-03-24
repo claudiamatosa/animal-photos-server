@@ -20,7 +20,7 @@ export default {
       if (!hasCategory("animals")(categories)) throw new Error("nope");
 
       const { url } = await imageUploader(file);
-      const { key } = await firebase.photo().push(url);
+      const { key } = await firebase.photos().push(url);
 
       return { id: key, src: url };
     }
