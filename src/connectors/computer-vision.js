@@ -8,19 +8,20 @@ const config = {
 
 const ComputerVision = () => {
   const analyze = params =>
-    `${
-      config.url
-    }/analyze?subscription-key=${apiKey1}&language=en&detectOrientation=true&${params}`;
+    `${config.url}/analyze?subscription-key=${
+      config.apiKey1
+    }&language=en&detectOrientation=true&${params}`;
 
   return {
     analyze: file =>
       fetch(analyze("visualFeatures=Categories"), {
         method: "POST",
-        body: file,
-        headers: {
-          "Content-Type": "application/octet-stream"
-        }
-      })
+        body: file.stream,
+        headers: new Headers({
+          "Content-Type": "application/octet-stream",
+          "Ocp-Apim-Subscription-Key": config.apiKey1
+        })
+      }).then(response => response.json())
   };
 };
 

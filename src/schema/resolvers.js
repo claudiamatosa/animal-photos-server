@@ -1,6 +1,7 @@
 import { GraphQLUpload } from "apollo-upload-server";
 import Firebase from "../connectors/firebase";
 import ComputerVision from "../connectors/computer-vision";
+import { hasCategory } from "../utils/categories";
 import { ImageUploader } from "../utils/images";
 
 const firebase = Firebase();
@@ -11,7 +12,8 @@ export default {
   Upload: GraphQLUpload,
 
   Mutation: {
-    addPhoto: async (_, { file }) => {
+    addPhoto: async (_, { data: { photo } }) => {
+      const file = await photo;
       const { categories } = await computerVision.analyze(file);
 
       if (!hasCategory("animals")(categories)) throw new Error("nope");
