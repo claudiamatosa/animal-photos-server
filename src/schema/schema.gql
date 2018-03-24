@@ -1,3 +1,5 @@
+scalar Upload
+
 input PhotoUpload {
   photo: Upload!
 }

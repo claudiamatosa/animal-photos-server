@@ -1,3 +1,4 @@
 {
-  "presets": [["env"], "latest"]
+  "presets": [["env"], "latest"],
+  "plugins": ["inline-import-graphql-ast"]
 }

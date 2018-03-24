@@ -1,6 +1,6 @@
 import path from "path";
 import firebase from "firebase";
-import storage from "@google-cloud/storage";
+import Storage from "@google-cloud/storage";
 
 const config = {
   apiKey: process.env.AF_FIREBASE_API_KEY,
