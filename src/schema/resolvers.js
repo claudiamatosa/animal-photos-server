@@ -1,4 +1,6 @@
 import { GraphQLUpload } from "apollo-upload-server";
+import { compose, mapObjIndexed, values } from "ramda";
+
 import Firebase from "../connectors/firebase";
 import ComputerVision from "../connectors/computer-vision";
 import { hasCategory } from "../utils/categories";
@@ -43,9 +45,12 @@ export default {
       };
     },
     photos: async () => {
-      const snapshot = firebase.photos().once();
-      console.log(snapshot.val());
-      return snapshot.val();
+      const snapshot = await firebase.photos().once("value");
+
+      return compose(
+        values,
+        mapObjIndexed((photo, key) => ({ id: key, ...photo }))
+      )(snapshot.val());
     }
   }
 };
