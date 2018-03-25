@@ -1,8 +1,8 @@
 import uuid from "uuid/v1";
 
-// Taken from https://medium.com/@stardusteric/nodejs-with-firebase-storage-c6ddcf131ceb
+// Adapted from https://medium.com/@stardusteric/nodejs-with-firebase-storage-c6ddcf131ceb
 export const ImageUploader = firebase => file => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     if (!file) {
       reject("No image file");
     }
@@ -22,11 +22,13 @@ export const ImageUploader = firebase => file => {
       reject(error);
     });
 
-    blobStream.on("finish", () => {
-      // The public URL can be used to directly access the file via HTTP.
-      const url = `https://storage.googleapis.com/${bucket.name}/${
-        fileUpload.name
-      }`;
+    blobStream.on("finish", async () => {
+      const [url] = await fileUpload.getSignedUrl({
+        action: "read",
+        // The day when machines take over the world
+        expires: "01-01-2100"
+      });
+
       resolve({ url });
     });
 

@@ -1,8 +1,11 @@
 import path from "path";
-import firebase from "firebase";
+import firebase from "firebase-admin";
 import Storage from "@google-cloud/storage";
 
+import serviceAccount from "./storage-keys.json";
+
 const config = {
+  credential: firebase.credential.cert(serviceAccount),
   apiKey: process.env.AF_FIREBASE_API_KEY,
   authDomain: process.env.AF_FIREBASE_AUTH_DOMAIN,
   databaseURL: process.env.AF_FIREBASE_DATABASE_URL,
