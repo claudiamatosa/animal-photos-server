@@ -1,6 +1,8 @@
 import fetch from "isomorphic-fetch";
 import toStream from "buffer-to-stream";
 
+import { ComputerVisionApiError, ServerError } from "../utils/errors";
+
 const config = {
   url: "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0",
   apiKey1: process.env.AF_MICROSOFT_COMPUTER_VISION_API_KEY_1,
@@ -27,7 +29,19 @@ const ComputerVision = () => {
         }
       );
 
-      return response.json();
+      const data = await response.json();
+
+      if (!response.ok) {
+        // throw new ServerError(data.message, {
+        //   code: "ANALYSIS_ERROR"
+        // });
+
+        throw new ComputerVisionApiError(data.message, {
+          code: "ANALYSIS_ERROR"
+        });
+      }
+
+      return data;
     }
   };
 };

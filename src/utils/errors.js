@@ -10,3 +10,14 @@ export class ServerError extends Error {
     Error.captureStackTrace(this, ServerError);
   }
 }
+
+export class ComputerVisionApiError extends Error {
+  constructor(message, data) {
+    super(message);
+
+    this.type = "COMPUTER_VISION_API_ERROR";
+    this.data = data;
+
+    Error.captureStackTrace(this, ServerError);
+  }
+}
