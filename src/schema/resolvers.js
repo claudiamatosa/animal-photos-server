@@ -35,7 +35,7 @@ export default {
 
   Query: {
     photo: async (_, { id }) => {
-      const snapshot = await firebase.photo(id).once();
+      const snapshot = await firebase.photo(id).once("value");
 
       return {
         id: Object.keys(snapshot.val())[0],
