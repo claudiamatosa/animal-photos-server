@@ -13,7 +13,18 @@ app.use(
   "/graphql",
   bodyParser.json(),
   apolloUploadExpress(),
-  graphqlExpress({ schema })
+  graphqlExpress({
+    schema,
+    formatError: error => {
+      return {
+        ...error,
+        type: error.originalError.type,
+        data: error.originalError.data,
+        // Disable in production
+        stack: error.originalError.stack
+      };
+    }
+  })
 );
 
 app.use("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }));
