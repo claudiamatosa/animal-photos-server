@@ -26,7 +26,7 @@ export default {
         !hasCategory("animals")(categories) &&
         !hasTag("animals")(description.tags)
       ) {
-        // throw new Error("no animals in here");
+        throw new Error("no animals in here");
         //
         // throw new Error(`
         //   MS Computer vision api didnʼt find animals in this photo.
@@ -38,13 +38,13 @@ export default {
         //   )}
         // `);
         //
-        throw new ServerError(
-          "MS Computer vision api didnʼt find animals in this photo.",
-          {
-            tags: description.tags,
-            categories: flattenCategories(categories)
-          }
-        );
+        // throw new ServerError(
+        //   "MS Computer vision api didnʼt find animals in this photo.",
+        //   {
+        //     tags: description.tags,
+        //     categories: flattenCategories(categories)
+        //   }
+        // );
       }
 
       const { url } = await imageUploader(file);
