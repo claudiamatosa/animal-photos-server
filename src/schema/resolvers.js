@@ -3,7 +3,7 @@ import { compose, mapObjIndexed, values } from "ramda";
 
 import Firebase from "../connectors/firebase";
 import ComputerVision from "../connectors/computer-vision";
-import { hasCategory } from "../utils/categories";
+import { hasCategory, hasTag } from "../utils/analyze";
 import { ImageUploader } from "../utils/images";
 import { addBufferToFile } from "../utils/file";
 
@@ -19,7 +19,17 @@ export default {
       let file = await addBufferToFile(photo);
       const { categories, description } = await computerVision.analyze(file);
 
-      if (!hasCategory("animals")(categories)) throw new Error("nope");
+      if (
+        !hasCategory("animals")(categories) &&
+        !hasTag("animals")(description.tags)
+      ) {
+        throw new Error("no animals in here");
+        // throw new Error(`
+        //   no animals in here: \n
+        //   tags: ${description.tags.join(", ")} \n
+        //   categories: ${JSON.stringify(categories)}
+        // `);
+      }
 
       const { url } = await imageUploader(file);
 
