@@ -15,14 +15,21 @@ export default {
   Mutation: {
     addPhoto: async (_, { data: { photo } }) => {
       let file = await addBufferToFile(photo);
-      const { categories } = await computerVision.analyze(file);
+      const { categories, description } = await computerVision.analyze(file);
 
       if (!hasCategory("animals")(categories)) throw new Error("nope");
 
       const { url } = await imageUploader(file);
-      const { key } = await firebase.photos().push(url);
 
-      return { id: key, src: url };
+      const photoData = {
+        src: url,
+        description: description.captions[0].text,
+        tags: description.tags
+      };
+
+      const { key } = await firebase.photos().push(photoData);
+
+      return { id: key, ...photoData };
     }
   },
 
@@ -31,12 +38,13 @@ export default {
       const snapshot = await firebase.photo(id).once();
 
       return {
-        id: Object.keys(snapshot.val())[0], // TODO: check if snapshot.key works
-        src: snapshot.val()
+        id: Object.keys(snapshot.val())[0],
+        ...snapshot.val()
       };
     },
     photos: async () => {
       const snapshot = firebase.photos().once();
+      console.log(snapshot.val());
       return snapshot.val();
     }
   }

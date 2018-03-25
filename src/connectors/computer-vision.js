@@ -15,14 +15,17 @@ const ComputerVision = () => {
 
   return {
     analyze: async file => {
-      const response = await fetch(analyze("visualFeatures=Categories"), {
-        method: "POST",
-        body: toStream(file.buffer),
-        headers: new Headers({
-          "Content-Type": "application/octet-stream",
-          "Ocp-Apim-Subscription-Key": config.apiKey1
-        })
-      });
+      const response = await fetch(
+        analyze("visualFeatures=Categories,Description"),
+        {
+          method: "POST",
+          body: toStream(file.buffer),
+          headers: new Headers({
+            "Content-Type": "application/octet-stream",
+            "Ocp-Apim-Subscription-Key": config.apiKey1
+          })
+        }
+      );
 
       return response.json();
     }

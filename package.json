@@ -38,6 +38,7 @@
     "babel-core": "^6.26.0",
     "babel-jest": "^22.4.3",
     "babel-plugin-inline-import-graphql-ast": "^2.3.5",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-latest": "^6.24.1",
     "husky": "^0.14.3",

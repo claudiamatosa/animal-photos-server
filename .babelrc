@@ -1,4 +1,4 @@
 {
   "presets": [["env"], "latest"],
-  "plugins": ["inline-import-graphql-ast"]
+  "plugins": ["inline-import-graphql-ast", "transform-object-rest-spread"]
 }

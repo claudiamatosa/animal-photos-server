@@ -7,6 +7,8 @@ input PhotoUpload {
 type Photo {
   id: String!
   src: String!
+  description: String
+  tags: [String]
 }
 
 type Query {
