@@ -32,10 +32,6 @@ const ComputerVision = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        // throw new ServerError(data.message, {
-        //   code: "ANALYSIS_ERROR"
-        // });
-
         throw new ComputerVisionApiError(data.message, {
           code: "ANALYSIS_ERROR"
         });
